@@ -105,7 +105,18 @@ export default class Migrator {
     return Promise.promisify(fs.readdir, {context: fs})(this._absoluteConfigDir())
       .then(migrations => {
         return filter(migrations, function(value) {
-          const extension = path.extname(value);
+          let extension = path.extname(value);
+          let customExt;
+          
+          // Check for two part extensions (like .d.ts)
+          const filenameArray = path.basename(value).split('.');
+          if (filenameArray.length > 2) {
+            const customExt = `.${filenameArray.slice(filenameArray.length - 2).join('.')}`;
+            extension = customExt;
+          }
+
+          console.log(`File: ${value}, ext: ${extension}, filenameArray: ${JSON.stringify(filenameArray, null, 2)}, customExt: ${customExt}`);
+
           return includes(SUPPORTED_EXTENSIONS, extension);
         }).sort();
       })

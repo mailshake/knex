@@ -7,6 +7,10 @@ import mkdirp from 'mkdirp';
 import Promise from 'bluebird';
 import { filter, includes, map, bind, template, each, extend } from 'lodash'
 
+const SUPPORTED_EXTENSIONS = Object.freeze([
+  '.co', '.coffee', '.eg', '.iced', '.js', '.litcoffee', '.ls', '.ts'
+]);
+
 // The new seeds we're performing, typically called from the `knex.seed`
 // interface on the main `knex` object. Passes the `knex` instance performing
 // the seeds.
@@ -42,9 +46,18 @@ Seeder.prototype._listAll = Promise.method(function(config) {
     .bind(this)
     .then(seeds =>
       filter(seeds, function(value) {
-        const extension = path.extname(value);
-        return includes(
-          ['.co', '.coffee', '.eg', '.iced', '.js', '.litcoffee', '.ls', '.ts'], extension);
+        let extension = path.extname(value);
+        let customExt;
+
+        // Check for two part extensions (like .d.ts)
+        const filenameArray = path.basename(value).split('.');
+        if (filenameArray.length > 2) {
+          customExt = `.${filenameArray.slice(filenameArray.length - 2).join('.')}`;
+          extension = customExt;
+        }
+        console.log(`File: ${value}, ext: ${extension}, filenameArray: ${JSON.stringify(filenameArray, null, 2)}, customExt: ${customExt}`);
+
+        return includes(SUPPORTED_EXTENSIONS, extension);
       }).sort()
     );
 });
