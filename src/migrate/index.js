@@ -105,7 +105,18 @@ export default class Migrator {
     return Promise.promisify(fs.readdir, {context: fs})(this._absoluteConfigDir())
       .then(migrations => {
         return filter(migrations, function(value) {
-          const extension = path.extname(value);
+          let extension = path.extname(value);
+          let customExt;
+          
+          // Check for two part extensions (like .d.ts)
+          const filenameArray = path.basename(value).split('.');
+          if (filenameArray.length > 2) {
+            const customExt = `.${filenameArray.slice(filenameArray.length - 2).join('.')}`;
+            extension = customExt;
+          }
+
+          console.log(`File: ${value}, ext: ${extension}, filenameArray: ${JSON.stringify(filenameArray, null, 2)}, customExt: ${customExt}`);
+
           return includes(SUPPORTED_EXTENSIONS, extension);
         }).sort();
       })
@@ -227,6 +238,7 @@ export default class Migrator {
   // Validates some migrations by requiring and checking for an `up` and `down`
   // function.
   _validateMigrationStructure(name) {
+    console.log(`_validateMigrationStructure require name: ${name}`);
     const migration = require(path.join(this._absoluteConfigDir(), name));
     if (typeof migration.up !== 'function' || typeof migration.down !== 'function') {
       throw new Error(`Invalid migration: ${name} must have both an up and down function`);
@@ -314,6 +326,7 @@ export default class Migrator {
     const log = [];
     each(migrations, (migration) => {
       const name = migration;
+      console.log(`_waterfallBatch require name: ${name}`);
       migration = require(directory + '/' + name);
 
       // We're going to run each of the migrations in the current "up".
