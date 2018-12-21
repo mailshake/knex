@@ -487,7 +487,7 @@ declare namespace Knex {
     options(options: { [key: string]: any }): this;
     connection(connection: any): this;
     debug(enabled: boolean): this;
-    transacting(trx: Transaction): this;
+    transacting(trx?: Transaction): this;
     stream(handler: (readable: stream.PassThrough) => any): Bluebird<any>;
     stream(
       options: { [key: string]: any },
