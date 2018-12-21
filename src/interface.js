@@ -60,9 +60,9 @@ export default function(Target) {
       this.client.logger.error(
         'Invalid value on transacting call, potential bug'
       );
-      throw Error(
-        'Invalid transacting value (null, undefined or empty object)'
-      );
+      // throw Error(
+      //   'Invalid transacting value (null, undefined or empty object)'
+      // );
     }
     return this;
   };
