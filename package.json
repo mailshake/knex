@@ -38,20 +38,42 @@
     "eslint-plugin-import": "^1.8.0",
     "istanbul": "^0.4.5",
     "json-loader": "^0.5.4",
-    "mariasql": "^0.2.3",
     "mocha": "^3.1.2",
-    "mysql": "^2.6.2",
-    "mysql2": "^1.1.1",
-    "pg": "^6.1.0",
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.3",
+    "pg": "^7.4.3",
     "pg-query-stream": "^1.0.0",
     "rimraf": "2.x",
     "sinon": "^1.10.0",
     "sinon-chai": "^2.5.0",
     "source-map-support": "^0.4.0",
-    "sqlite3": "^3.0.5",
+    "sqlite3": "^4.0.1",
     "tap-spec": "^4.0.0",
     "tape": "^4.0.0",
     "through": "^2.3.4"
+  },
+  "peerDependencies": {
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.3",
+    "pg": "^7.4.3",
+    "sqlite3": "^4.0.1"
+  },
+  "peerDependenciesMeta": {
+    "mssql": {
+      "optional": true
+    },
+    "mysql": {
+      "optional": true
+    },
+    "mysql2": {
+      "optional": true
+    },
+    "pg": {
+      "optional": true
+    },
+    "sqlite3": {
+      "optional": true
+    }
   },
   "buildDependencies": [
     "babel-cli",
