@@ -56,6 +56,30 @@
     "through": "^2.3.8",
     "toxiproxy-node-client": "^2.0.6"
   },
+  "peerDependencies": {
+    "mssql": "^4.1.0",
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.3",
+    "pg": "^7.4.1",
+    "sqlite3": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "mssql": {
+      "optional": true
+    },
+    "mysql": {
+      "optional": true
+    },
+    "mysql2": {
+      "optional": true
+    },
+    "pg": {
+      "optional": true
+    },
+    "sqlite3": {
+      "optional": true
+    }
+  },
   "buildDependencies": [
     "babel-cli",
     "babel-plugin-add-module-exports",
